@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>reskyline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600&family=Outfit:wght@200;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
+<audio id="bg-music" src="intro.mp3" loop preload="auto"></audio>
+
+<!-- BOOT SEQUENCE -->
+<div id="boot">
+  <div id="boot-inner">
+    <div id="boot-text"></div>
+    <div class="progress-wrap">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-label" id="progress-label">0%</div>
+    </div>
+  </div>
+</div>
+
+<div id="splash">
+  <div class="splash-name">reskyline</div>
+  <div class="splash-divider"></div>
+  <div class="splash-prompt">click to enter</div>
+</div>
+
+<canvas id="ascii-canvas"></canvas>
+<canvas id="rain-canvas"></canvas>
+<canvas id="trail-canvas"></canvas>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="grid-bg"></div>
+
+<div class="scene">
+  <div class="panel-wrap" id="panel-wrap">
+    <canvas id="beam-canvas"></canvas>
+
+    <div class="card-flipper" id="card-flipper">
+
+      <div class="card-face card-front" id="panel">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+
+        <div class="clock" id="clock">local time: 00:00:00</div>
+        <img class="avatar" src="icon.jpg" alt="reskyline" />
+        <h1><span id="title-text"></span><span class="cursor" id="title-cursor"></span></h1>
+        <p class="subtitle">programmer</p>
+        <div class="divider"></div>
+
+        <div class="typewriter-wrap">
+          <span id="typewriter-text"></span><span class="cursor"></span>
+        </div>
+
+        <div class="social-icons">
+          <a href="https://discord.com/users/338755757715619840" target="_blank" class="glass-icon">
+            <i class="fab fa-discord"></i>
+          </a>
+          <a href="https://github.com/reskyline" target="_blank" class="glass-icon">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+
+        <button class="projects-btn" id="projects-btn">
+          <i class="fas fa-code"></i> projects
+        </button>
+      </div>
+
+      <div class="card-face card-back">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+
+        <button class="back-btn" id="back-btn">
+          <i class="fas fa-arrow-left"></i> back
+        </button>
+
+        <h2 class="projects-title">projects</h2>
+        <div class="divider" style="margin-bottom:1.2rem;"></div>
+
+        <div class="project-list">
+          <a class="project-card" href="https://www.roblox.com/communities/422808508/skyline-interactive-network#!/about" target="_blank">
+            <div class="project-name">group <i class="fas fa-arrow-up-right-from-square" style="font-size:10px;opacity:0.6;"></i></div>
+            <div class="project-desc">my roblox group for games</div>
+            <div class="project-tags">
+              <span class="project-tag">ROBLOX</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
