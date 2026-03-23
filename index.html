@@ -3,105 +3,426 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>reskyline</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600&family=Outfit:wght@200;400;500&display=swap" rel="stylesheet" />
+  <title>inlur</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080b10;
+      --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
+      --text: #e8eaf0;
+      --text-dim: rgba(232,234,240,0.45);
+      --accent: #4f8eff;
+      --accent-dim: rgba(79,142,255,0.15);
+      --accent-glow: rgba(79,142,255,0.25);
+      --green: #3dffa0;
+      --green-dim: rgba(61,255,160,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px 128px;
+    }
+
+    canvas#bg-canvas {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,11,16,0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem; font-weight: 700; letter-spacing: 0.05em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* ── PAGES ── */
+    .page {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+    }
+    .page.active { display: flex; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 680px; width: 100%;
+      animation: fadeUp 0.6s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block;
+      width: 32px; height: 1px; background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 700; line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 .blink {
+      color: var(--accent);
+      animation: blinkAnim 1.1s step-end infinite;
+    }
+    @keyframes blinkAnim { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-bio {
+      font-size: 1rem; line-height: 1.8; color: var(--text-dim);
+      max-width: 520px; margin-bottom: 2rem;
+    }
+
+    .skills-row {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem;
+    }
+    .skill-chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.35rem 0.85rem; border-radius: 4px;
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--text-dim);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .skill-chip:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .skill-chip.highlight { border-color: rgba(79,142,255,0.3); color: var(--accent); background: var(--accent-dim); }
+
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.8rem 1.8rem; border-radius: 6px;
+      background: var(--accent); color: #080b10;
+      border: none; cursor: pointer;
+      transition: opacity 0.2s, box-shadow 0.2s;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover { opacity: 0.88; box-shadow: 0 0 24px var(--accent-glow); }
+
+    .btn-ghost {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.8rem 1.8rem; border-radius: 6px;
+      background: transparent; color: var(--text-dim);
+      border: 1px solid var(--border); cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-ghost:hover { border-color: var(--border-hover); color: var(--text); }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      width: 100%; max-width: 680px;
+      height: 1px; background: var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* ── CONTACT ROW ── */
+    .contact-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .contact-chip {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; color: var(--text-dim);
+      padding: 0.5rem 1rem; border-radius: 6px;
+      border: 1px solid var(--border); background: var(--surface);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .contact-chip i { font-size: 0.85rem; }
+    .contact-chip:hover { border-color: var(--border-hover); color: var(--text); }
+
+    /* ── PROJECTS PAGE ── */
+    .projects-wrap { max-width: 680px; width: 100%; animation: fadeUp 0.5s ease both; }
+    .page-header { margin-bottom: 2.5rem; }
+    .page-header h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700;
+      letter-spacing: -0.01em; color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .page-header p { font-size: 0.9rem; color: var(--text-dim); }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .card-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+
+    .card {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.25rem; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--surface);
+      text-decoration: none; color: inherit;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      gap: 1rem;
+    }
+    .card:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.05); transform: translateX(4px); }
+    .card-left { flex: 1; min-width: 0; }
+    .card-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem; font-weight: 700; color: var(--text);
+      margin-bottom: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .card-desc { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; }
+    .card-arrow { color: var(--text-dim); font-size: 0.75rem; flex-shrink: 0; transition: color 0.2s, transform 0.2s; }
+    .card:hover .card-arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+    .tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.2rem 0.55rem; border-radius: 3px;
+      border: 1px solid rgba(79,142,255,0.25); background: var(--accent-dim);
+      color: var(--accent); margin-top: 0.4rem; margin-right: 0.3rem;
+    }
+    .tag.green { border-color: rgba(61,255,160,0.2); background: var(--green-dim); color: var(--green); }
+
+    /* ── SOCIAL ICONS ── */
+    .social-icons { display: flex; gap: 0.6rem; margin-top: 2rem; }
+    .icon-btn {
+      width: 38px; height: 38px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--text-dim); text-decoration: none; font-size: 1rem;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .icon-btn:hover { border-color: var(--border-hover); color: var(--text); background: rgba(255,255,255,0.06); }
+    /* custom roblox SVG icon */
+    .icon-roblox svg { width: 16px; height: 16px; fill: currentColor; }
+  </style>
 </head>
 <body>
 
-<audio id="bg-music" src="intro.mp3" loop preload="auto"></audio>
+<canvas id="bg-canvas"></canvas>
 
-<!-- BOOT SEQUENCE -->
-<div id="boot">
-  <div id="boot-inner">
-    <div id="boot-text"></div>
-    <div class="progress-wrap">
-      <div class="progress-bar-track">
-        <div class="progress-bar-fill" id="progress-fill"></div>
-      </div>
-      <div class="progress-label" id="progress-label">0%</div>
+<nav>
+  <a class="nav-logo" href="#">inlur<span>.</span></a>
+  <div class="nav-links">
+    <a href="#" class="active" onclick="showPage('about', this)">About</a>
+    <a href="#" onclick="showPage('projects', this)">Projects</a>
+  </div>
+</nav>
+
+<!-- ABOUT PAGE -->
+<div class="page active" id="page-about">
+  <div class="hero">
+    <div class="hero-eyebrow">developer & designer</div>
+    <h1>inlur<span class="blink">_</span></h1>
+
+    <p class="hero-bio">
+      Multi-skilled developer with a strong foundation in building and game design.
+      5 years of building experience, 1 year of Luau development, and a focus on
+      delivering polished UI and immersive game experiences on Roblox.
+    </p>
+
+    <div class="skills-row">
+      <span class="skill-chip highlight">Luau</span>
+      <span class="skill-chip highlight">Game Design</span>
+      <span class="skill-chip highlight">UI / UX</span>
+      <span class="skill-chip">Roblox Studio</span>
+      <span class="skill-chip">5 yrs Building</span>
+    </div>
+
+    <div class="hero-actions">
+      <a href="#" class="btn-primary" onclick="showPage('projects', document.querySelector('.nav-links a:last-child')); return false;">
+        <i class="fas fa-code-branch"></i> View Projects
+      </a>
+    </div>
+
+    <div class="social-icons">
+      <a href="https://www.roblox.com/users/1028929837/profile" target="_blank" class="icon-btn icon-roblox" title="Roblox">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M111 21 21 391l280 100 90-370zm166 228-55-20 20-55 55 20z"/></svg>
+      </a>
+      <a href="https://discord.com/users/786954551274110997" target="_blank" class="icon-btn" title="Discord">
+        <i class="fab fa-discord"></i>
+      </a>
     </div>
   </div>
 </div>
 
-<div id="splash">
-  <div class="splash-name">reskyline</div>
-  <div class="splash-divider"></div>
-  <div class="splash-prompt">click to enter</div>
-</div>
-
-<canvas id="ascii-canvas"></canvas>
-<canvas id="rain-canvas"></canvas>
-<canvas id="trail-canvas"></canvas>
-<div class="blob blob-1"></div>
-<div class="blob blob-2"></div>
-<div class="grid-bg"></div>
-
-<div class="scene">
-  <div class="panel-wrap" id="panel-wrap">
-    <canvas id="beam-canvas"></canvas>
-
-    <div class="card-flipper" id="card-flipper">
-
-      <div class="card-face card-front" id="panel">
-        <div class="corner corner-tl"></div>
-        <div class="corner corner-tr"></div>
-        <div class="corner corner-bl"></div>
-        <div class="corner corner-br"></div>
-
-        <div class="clock" id="clock">local time: 00:00:00</div>
-        <img class="avatar" src="icon.jpg" alt="reskyline" />
-        <h1><span id="title-text"></span><span class="cursor" id="title-cursor"></span></h1>
-        <p class="subtitle">programmer</p>
-        <div class="divider"></div>
-
-        <div class="typewriter-wrap">
-          <span id="typewriter-text"></span><span class="cursor"></span>
-        </div>
-
-        <div class="social-icons">
-          <a href="https://discord.com/users/338755757715619840" target="_blank" class="glass-icon">
-            <i class="fab fa-discord"></i>
-          </a>
-          <a href="https://github.com/reskyline" target="_blank" class="glass-icon">
-            <i class="fab fa-github"></i>
-          </a>
-        </div>
-
-        <button class="projects-btn" id="projects-btn">
-          <i class="fas fa-code"></i> projects
-        </button>
-      </div>
-
-      <div class="card-face card-back">
-        <div class="corner corner-tl"></div>
-        <div class="corner corner-tr"></div>
-        <div class="corner corner-bl"></div>
-        <div class="corner corner-br"></div>
-
-        <button class="back-btn" id="back-btn">
-          <i class="fas fa-arrow-left"></i> back
-        </button>
-
-        <h2 class="projects-title">projects</h2>
-        <div class="divider" style="margin-bottom:1.2rem;"></div>
-
-        <div class="project-list">
-          <a class="project-card" href="https://www.roblox.com/communities/422808508/skyline-interactive-network#!/about" target="_blank">
-            <div class="project-name">group <i class="fas fa-arrow-up-right-from-square" style="font-size:10px;opacity:0.6;"></i></div>
-            <div class="project-desc">my roblox group for games</div>
-            <div class="project-tags">
-              <span class="project-tag">ROBLOX</span>
-            </div>
-          </a>
-        </div>
-      </div>
-
+<!-- PROJECTS PAGE -->
+<div class="page" id="page-projects">
+  <div class="projects-wrap">
+    <div class="page-header">
+      <h2>Projects</h2>
+      <p>Games and communities built on Roblox.</p>
     </div>
+
+    <div class="section-label">Games</div>
+    <div class="card-list">
+      <a class="card" href="https://www.roblox.com/games/80099368346326/Invisible-Mines-Tower" target="_blank">
+        <div class="card-left">
+          <div class="card-name">Invisible Mines Tower</div>
+          <div class="card-desc">Tower defence experience with invisible mine mechanics.</div>
+          <span class="tag">Roblox</span><span class="tag green">Live</span>
+        </div>
+        <i class="fas fa-arrow-up-right-from-square card-arrow"></i>
+      </a>
+      <a class="card" href="https://www.roblox.com/games/140644961354094/Pillow-Battles" target="_blank">
+        <div class="card-left">
+          <div class="card-name">Pillow Battles</div>
+          <div class="card-desc">Casual PvP combat game with a playful aesthetic.</div>
+          <span class="tag">Roblox</span><span class="tag green">Live</span>
+        </div>
+        <i class="fas fa-arrow-up-right-from-square card-arrow"></i>
+      </a>
+      <a class="card" href="https://www.roblox.com/games/86670564972916/Which-Cup" target="_blank">
+        <div class="card-left">
+          <div class="card-name">Which Cup</div>
+          <div class="card-desc">Interactive guessing game — find the right cup.</div>
+          <span class="tag">Roblox</span><span class="tag green">Live</span>
+        </div>
+        <i class="fas fa-arrow-up-right-from-square card-arrow"></i>
+      </a>
+    </div>
+
+    <div class="section-label">Communities</div>
+    <div class="card-list">
+      <a class="card" href="https://www.roblox.com/communities/1018786782/0-CCU-Table-Games#!/about" target="_blank">
+        <div class="card-left">
+          <div class="card-name">0 CCU Table Games</div>
+          <div class="card-desc">Roblox group for table-top style game experiences.</div>
+          <span class="tag">Group</span>
+        </div>
+        <i class="fas fa-arrow-up-right-from-square card-arrow"></i>
+      </a>
+      <a class="card" href="https://www.roblox.com/communities/1090676297/Aspirant-Interactive#!/about" target="_blank">
+        <div class="card-left">
+          <div class="card-name">Aspirant Interactive</div>
+          <div class="card-desc">Development studio community group.</div>
+          <span class="tag">Group</span>
+        </div>
+        <i class="fas fa-arrow-up-right-from-square card-arrow"></i>
+      </a>
+      <a class="card" href="https://www.roblox.com/communities/680335823/inlur-productions#!/about" target="_blank">
+        <div class="card-left">
+          <div class="card-name">inlur productions</div>
+          <div class="card-desc">Main production group — games and experiences by inlur.</div>
+          <span class="tag">Group</span>
+        </div>
+        <i class="fas fa-arrow-up-right-from-square card-arrow"></i>
+      </a>
+    </div>
+
   </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+  // ── PAGE SWITCHING ──
+  function showPage(id, linkEl) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    if (linkEl) linkEl.classList.add('active');
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var idx = Array.from(document.querySelectorAll('.nav-links a')).indexOf(this);
+      showPage(idx === 0 ? 'about' : 'projects', this);
+    });
+  });
+
+  // ── BACKGROUND CANVAS ──
+  var canvas = document.getElementById('bg-canvas');
+  var ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Subtle floating orbs
+  var orbs = Array.from({ length: 3 }, (_, i) => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    r: 200 + Math.random() * 200,
+    vx: (Math.random() - 0.5) * 0.15,
+    vy: (Math.random() - 0.5) * 0.15,
+    hue: i === 0 ? 215 : i === 1 ? 165 : 240
+  }));
+
+  function drawBg() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    orbs.forEach(o => {
+      o.x += o.vx; o.y += o.vy;
+      if (o.x < -o.r) o.x = canvas.width + o.r;
+      if (o.x > canvas.width + o.r) o.x = -o.r;
+      if (o.y < -o.r) o.y = canvas.height + o.r;
+      if (o.y > canvas.height + o.r) o.y = -o.r;
+      var g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+      g.addColorStop(0, 'hsla(' + o.hue + ',60%,40%,0.07)');
+      g.addColorStop(1, 'hsla(' + o.hue + ',60%,40%,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    requestAnimationFrame(drawBg);
+  }
+  drawBg();
+</script>
 </body>
 </html>
