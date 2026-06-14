@@ -1,4 +1,52 @@
-﻿function navigate(pageId) {
+const THEME_FALLBACK_RGB = [79, 142, 255];
+
+function hexToRgb(value) {
+  const hex = value.trim().replace('#', '');
+
+  if (hex.length === 3) {
+    return hex.split('').map(char => parseInt(char + char, 16));
+  }
+
+  if (hex.length === 6) {
+    return [0, 2, 4].map(start => parseInt(hex.slice(start, start + 2), 16));
+  }
+
+  return THEME_FALLBACK_RGB;
+}
+
+function mixRgb(rgb, targetRgb, amount) {
+  return rgb.map((channel, index) => Math.round((channel * (1 - amount)) + (targetRgb[index] * amount)));
+}
+
+function rgbString(rgb) {
+  return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+}
+
+function rgbaString(rgb, alpha) {
+  return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
+}
+
+function applyThemeColor() {
+  const root = document.documentElement;
+  const themeRgb = hexToRgb(getComputedStyle(root).getPropertyValue('--theme-color'));
+  const accent2 = mixRgb(themeRgb, [255, 255, 255], 0.42);
+
+  root.style.setProperty('--bg', rgbString(mixRgb(themeRgb, [5, 6, 11], 0.91)));
+  root.style.setProperty('--card', rgbString(mixRgb(themeRgb, [16, 18, 29], 0.9)));
+  root.style.setProperty('--card2', rgbString(mixRgb(themeRgb, [21, 24, 39], 0.87)));
+  root.style.setProperty('--accent2', rgbString(accent2));
+  root.style.setProperty('--green', rgbString(mixRgb(themeRgb, [66, 245, 168], 0.55)));
+  root.style.setProperty('--theme-05', rgbaString(themeRgb, 0.05));
+  root.style.setProperty('--theme-08', rgbaString(themeRgb, 0.08));
+  root.style.setProperty('--theme-10', rgbaString(themeRgb, 0.1));
+  root.style.setProperty('--theme-14', rgbaString(themeRgb, 0.14));
+  root.style.setProperty('--theme-30', rgbaString(themeRgb, 0.3));
+  root.style.setProperty('--theme-85', rgbaString(themeRgb, 0.85));
+  root.style.setProperty('--accent-soft', rgbaString(accent2, 0.5));
+}
+
+applyThemeColor();
+function navigate(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('[data-page]').forEach(a => a.classList.remove('active'));
       document.getElementById('page-' + pageId).classList.add('active');
@@ -50,54 +98,3 @@
       const canvas = document.getElementById(id);
       if (!canvas || _particles[id]) return;
       _particles[id] = true;
-      const ctx = canvas.getContext('2d');
-      const particleRgb = getParticleRgb();
-      let W, H, P = [];
-      function resize() {
-        W = canvas.width = canvas.parentElement.offsetWidth;
-        H = canvas.height = canvas.parentElement.offsetHeight;
-        P = []; for (let i = 0; i < 110; i++) P.push(mk());
-      }
-      function mk() { return { x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.5 + 0.3, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25, op: Math.random() * .42 + .06 }; }
-      resize();
-      window.addEventListener('resize', resize);
-      (function draw() {
-        ctx.clearRect(0, 0, W, H);
-        P.forEach(p => {
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${particleRgb[0]},${particleRgb[1]},${particleRgb[2]},${p.op})`; ctx.fill();
-          p.x += p.vx; p.y += p.vy;
-          if (p.x < -2) p.x = W + 2; if (p.x > W + 2) p.x = -2;
-          if (p.y < -2) p.y = H + 2; if (p.y > H + 2) p.y = -2;
-        });
-        requestAnimationFrame(draw);
-      })();
-    }
-    initParticles('particlesHome');
-
-    setTimeout(() => {
-      document.querySelectorAll('.stat-num[data-target]').forEach(el => {
-        const t = parseInt(el.dataset.target); let c = 0; const s = t / 40;
-        const ti = setInterval(() => { c = Math.min(c + s, t); el.textContent = Math.round(c); if (c >= t) clearInterval(ti); }, 30);
-      });
-    }, 800);
-
-    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$';
-    function scrambleTitle(el) {
-      if (!el) return;
-      const orig = el.dataset.text || el.textContent;
-      el.dataset.text = orig;
-      let iter = 0, timer;
-      clearInterval(timer);
-      timer = setInterval(() => {
-        el.textContent = orig.split('').map((c, i) => i < iter ? orig[i] : CHARS[Math.floor(Math.random() * CHARS.length)]).join('');
-        if (iter >= orig.length) { clearInterval(timer); el.textContent = orig; }
-        iter += 0.4;
-      }, 40);
-    }
-    const ht = document.getElementById('heroTitle');
-    if (ht) ht.addEventListener('mouseenter', () => scrambleTitle(ht));
-    ['titleGames', 'titleComm', 'titleContact'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('mouseenter', () => scrambleTitle(el));
-    });
