@@ -8,7 +8,6 @@
 
     :root {
       
-  --theme-color: #4f8eff;
   --bg: color-mix(in srgb, var(--theme-color) 9%, #05060b);
   --card: color-mix(in srgb, var(--theme-color) 10%, #10121d);
   --card2: color-mix(in srgb, var(--theme-color) 13%, #151827);
