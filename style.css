@@ -1,1 +1,100 @@
+﻿*,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
+    :root {
+      
+  --theme-color: #4f8eff;
+  --bg: color-mix(in srgb, var(--theme-color) 9%, #05060b);
+  --card: color-mix(in srgb, var(--theme-color) 10%, #10121d);
+  --card2: color-mix(in srgb, var(--theme-color) 13%, #151827);
+  --border: rgba(255, 255, 255, 0.07);
+  --border2: rgba(255, 255, 255, 0.13);
+  --fg: #ffffff;
+  --fg2: rgba(255, 255, 255, 0.62);
+  --fg3: rgba(255, 255, 255, 0.38);
+  --accent: var(--theme-color);
+  --accent2: color-mix(in srgb, var(--theme-color) 58%, white);
+  --green: color-mix(in srgb, var(--theme-color) 45%, #42f5a8);
+  --theme-05: color-mix(in srgb, var(--theme-color) 5%, transparent);
+  --theme-08: color-mix(in srgb, var(--theme-color) 8%, transparent);
+  --theme-10: color-mix(in srgb, var(--theme-color) 10%, transparent);
+  --theme-14: color-mix(in srgb, var(--theme-color) 14%, transparent);
+  --theme-30: color-mix(in srgb, var(--theme-color) 30%, transparent);
+  --theme-85: color-mix(in srgb, var(--theme-color) 85%, transparent);
+  --accent-soft: color-mix(in srgb, var(--accent2) 50%, transparent);
+  --nav-h: 64px;
+}
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 2px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--theme-05) 1px, transparent 1px),
+        linear-gradient(90deg, var(--theme-05) 1px, transparent 1px);
+      background-size: 58px 58px;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 3rem;
+      background: transparent;
+      transition: background 0.35s, backdrop-filter 0.35s;
+      gap: 2rem;
+    }
+
+    nav.solid {
+      background: transparent;
+      border-bottom: none;
+    }
+
+    .nav-brand {
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--fg);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
