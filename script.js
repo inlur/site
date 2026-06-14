@@ -26,9 +26,13 @@ function rgbaString(rgb, alpha) {
   return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 }
 
+function getThemeRgb() {
+  return hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--theme-color'));
+}
+
 function applyThemeColor() {
   const root = document.documentElement;
-  const themeRgb = hexToRgb(getComputedStyle(root).getPropertyValue('--theme-color'));
+  const themeRgb = getThemeRgb();
   const accent2 = mixRgb(themeRgb, [255, 255, 255], 0.42);
 
   root.style.setProperty('--bg', rgbString(mixRgb(themeRgb, [5, 6, 11], 0.91)));
@@ -45,56 +49,52 @@ function applyThemeColor() {
   root.style.setProperty('--accent-soft', rgbaString(accent2, 0.5));
 }
 
-applyThemeColor();
 function navigate(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('[data-page]').forEach(a => a.classList.remove('active'));
-      document.getElementById('page-' + pageId).classList.add('active');
-      document.querySelectorAll('[data-page="' + pageId + '"]').forEach(a => a.classList.add('active'));
-      window.scrollTo(0, 0);
-      mainNav.classList.toggle('solid', pageId !== 'home');
+  document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+  document.querySelectorAll('[data-page]').forEach(link => link.classList.remove('active'));
 
-      const pmap = { home: 'particlesHome', games: 'particlesGames', communities: 'particlesComm', contact: 'particlesContact' };
-      if (pmap[pageId]) setTimeout(() => initParticles(pmap[pageId]), 40);
-      const tmap = { games: 'titleGames', communities: 'titleComm', contact: 'titleContact' };
-      if (tmap[pageId]) setTimeout(() => scrambleTitle(document.getElementById(tmap[pageId])), 100);
-    }
+  const page = document.getElementById(`page-${pageId}`);
+  if (!page) return;
 
-    document.addEventListener('click', e => {
-      const link = e.target.closest('[data-page]');
-      if (!link) return;
-      const page = link.dataset.page;
-      if (page) { e.preventDefault(); navigate(page); }
-    });
+  page.classList.add('active');
+  document.querySelectorAll(`[data-page="${pageId}"]`).forEach(link => link.classList.add('active'));
+  window.scrollTo(0, 0);
 
-    const mainNav = document.getElementById('mainNav');
-    window.addEventListener('scroll', () => {
-      const onHome = document.getElementById('page-home').classList.contains('active');
-      if (onHome) mainNav.classList.toggle('solid', window.scrollY > 30);
-    });
+  const mainNav = document.getElementById('mainNav');
+  if (mainNav) mainNav.classList.toggle('solid', pageId !== 'home');
 
-    const _particles = {};
-    function getThemeRgb() {
-      const raw = getComputedStyle(document.documentElement).getPropertyValue('--theme-color').trim();
-      const hex = raw.replace('#', '');
+  const particleCanvasIds = {
+    home: 'particlesHome',
+    games: 'particlesGames',
+    communities: 'particlesComm',
+    contact: 'particlesContact'
+  };
 
-      if (hex.length === 3) {
-        return hex.split('').map(char => parseInt(char + char, 16));
-      }
+  const titleIds = {
+    games: 'titleGames',
+    communities: 'titleComm',
+    contact: 'titleContact'
+  };
 
-      if (hex.length === 6) {
-        return [0, 2, 4].map(start => parseInt(hex.slice(start, start + 2), 16));
-      }
+  if (particleCanvasIds[pageId]) setTimeout(() => initParticles(particleCanvasIds[pageId]), 40);
+  if (titleIds[pageId]) setTimeout(() => scrambleTitle(document.getElementById(titleIds[pageId])), 100);
+}
 
-      return [79, 142, 255];
-    }
+const initializedParticles = new Set();
 
-    function getParticleRgb() {
-      const themeRgb = getThemeRgb();
-      return themeRgb.map(channel => Math.round((channel * 0.58) + (255 * 0.42)));
-    }
+function getParticleRgb() {
+  return mixRgb(getThemeRgb(), [255, 255, 255], 0.42);
+}
 
-    function initParticles(id) {
-      const canvas = document.getElementById(id);
-      if (!canvas || _particles[id]) return;
-      _particles[id] = true;
+function initParticles(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas || initializedParticles.has(id)) return;
+
+  initializedParticles.add(id);
+  const ctx = canvas.getContext('2d');
+  const particleRgb = getParticleRgb();
+  let width = 0;
+  let height = 0;
+  let particles = [];
+
+  function createParticle() {
