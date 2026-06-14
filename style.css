@@ -1,4 +1,4 @@
-﻿*,
+*,
     *::before,
     *::after {
       box-sizing: border-box;
@@ -7,25 +7,27 @@
     }
 
     :root {
-      
-  --bg: color-mix(in srgb, var(--theme-color) 9%, #05060b);
-  --card: color-mix(in srgb, var(--theme-color) 10%, #10121d);
-  --card2: color-mix(in srgb, var(--theme-color) 13%, #151827);
+  /* Change this one value to retheme the site. */
+  --theme-color: #4f8eff;
+
+  --bg: #0a101f;
+  --card: #111320;
+  --card2: #161929;
   --border: rgba(255, 255, 255, 0.07);
   --border2: rgba(255, 255, 255, 0.13);
   --fg: #ffffff;
   --fg2: rgba(255, 255, 255, 0.62);
   --fg3: rgba(255, 255, 255, 0.38);
   --accent: var(--theme-color);
-  --accent2: color-mix(in srgb, var(--theme-color) 58%, white);
-  --green: color-mix(in srgb, var(--theme-color) 45%, #42f5a8);
-  --theme-05: color-mix(in srgb, var(--theme-color) 5%, transparent);
-  --theme-08: color-mix(in srgb, var(--theme-color) 8%, transparent);
-  --theme-10: color-mix(in srgb, var(--theme-color) 10%, transparent);
-  --theme-14: color-mix(in srgb, var(--theme-color) 14%, transparent);
-  --theme-30: color-mix(in srgb, var(--theme-color) 30%, transparent);
-  --theme-85: color-mix(in srgb, var(--theme-color) 85%, transparent);
-  --accent-soft: color-mix(in srgb, var(--accent2) 50%, transparent);
+  --accent2: #a7c8ff;
+  --green: #3de89e;
+  --theme-05: rgba(79, 142, 255, 0.05);
+  --theme-08: rgba(79, 142, 255, 0.08);
+  --theme-10: rgba(79, 142, 255, 0.1);
+  --theme-14: rgba(79, 142, 255, 0.14);
+  --theme-30: rgba(79, 142, 255, 0.3);
+  --theme-85: rgba(79, 142, 255, 0.85);
+  --accent-soft: rgba(167, 200, 255, 0.5);
   --nav-h: 64px;
 }
 
@@ -96,4 +98,3 @@
       display: flex;
       align-items: center;
       gap: 0.45rem;
-      flex-shrink: 0;
