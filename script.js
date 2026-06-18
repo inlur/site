@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-page="' + pageId + '"]').forEach(a => a.classList.add('active'));
     window.scrollTo(0, 0);
 
-    if (mainNav) mainNav.classList.toggle('solid', pageId !== 'home');
+if (mainNav) mainNav.classList.remove('solid');
 
     const pmap = { home: 'particlesHome', games: 'particlesGames', communities: 'particlesComm', contact: 'particlesContact' };
     if (pmap[pageId]) setTimeout(() => initParticles(pmap[pageId]), 40);
@@ -28,11 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (page) { e.preventDefault(); navigate(page); }
   });
 
-  window.addEventListener('scroll', () => {
-    const homePage = document.getElementById('page-home');
-    const onHome = homePage ? homePage.classList.contains('active') : false;
-    if (onHome && mainNav) mainNav.classList.toggle('solid', window.scrollY > 30);
-  });
+window.addEventListener('scroll', () => {
+  if (mainNav) mainNav.classList.toggle('solid', window.scrollY > 30);
+});
 
   const _particles = {};
 
@@ -127,4 +125,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el) el.addEventListener('mouseenter', () => scrambleTitle(el));
   });
 
+  document.querySelectorAll('.game-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotateX = ((y - cy) / cy) * -6;
+    const rotateY = ((x - cx) / cx) * 6;
+    card.style.transform = `translateY(-6px) perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
 });
