@@ -1,18 +1,18 @@
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #060810;
-      --card: #111320;
-      --card2: #161929;
-      --border: rgba(255, 255, 255, 0.07);
-      --border2: rgba(255, 255, 255, 0.13);
-      --fg: #ffffff;
-      --fg2: rgba(255, 255, 255, 0.62);
-      --fg3: rgba(255, 255, 255, 0.38);
-      --accent: #4f8eff;
-      --accent2: #7fb3ff;
-      --green: #3de89e;
-      --nav-h: 64px;
+    --bg: #0a0612;
+    --card: #140c1e;
+    --card2: #1a1028;
+    --border: rgba(255, 255, 255, 0.07);
+    --border2: rgba(255, 255, 255, 0.13);
+    --fg: #ffffff;
+    --fg2: rgba(255, 255, 255, 0.62);
+    --fg3: rgba(255, 255, 255, 0.38);
+    --accent: #ff2d9b;
+    --accent2: #ff69c0;
+    --green: #00e5c4;
+    --nav-h: 64px;
     }
 
     html {
@@ -24,6 +24,7 @@
       color: var(--fg);
       font-family: 'Montserrat', sans-serif;
       overflow-x: hidden;
+      overflow-y: auto;
       min-height: 100vh;
     }
 
@@ -47,8 +48,8 @@
       z-index: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(79, 142, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79, 142, 255, 0.05) 1px, transparent 1px);
+      linear-gradient(rgba(255, 45, 155, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 45, 155, 0.04) 1px, transparent 1px);
       background-size: 58px 58px;
     }
 
@@ -67,9 +68,8 @@
       gap: 2rem;
     }
 
-    /* FIX 1: nav.solid now actually makes the nav opaque on scroll */
     nav.solid {
-      background: rgba(6, 8, 16, 0.85);
+      background: rgba(8, 8, 8, 0.85), opacity 0.5;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -143,13 +143,15 @@
 
     .page {
       display: none;
-      min-height: 100vh;
       position: relative;
       z-index: 1;
       flex-direction: column;
     }
 
-    .page.active { display: flex; }
+    .page.active { 
+        display: flex; 
+        min-height: 100vh;
+    }
 
     .hero {
       position: relative;
@@ -170,16 +172,11 @@
       pointer-events: none;
       z-index: 1;
     }
-
-    /*
-      FIX 3: hero-orb-1 uses translateX(-50%) for centering AND translateY in the
-      animation. Both must always include translateX(-50%) or the centering breaks.
-      Do not remove translateX(-50%) from either the base style or the keyframes.
-    */
+    
     .hero-orb-1 {
       width: 480px;
       height: 480px;
-      background: radial-gradient(circle, rgba(79, 142, 255, 0.14) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255, 45, 155, 0.13) 0%, transparent 70%);
       top: -60px;
       left: 50%;
       transform: translateX(-50%);
@@ -189,7 +186,7 @@
     .hero-orb-2 {
       width: 300px;
       height: 300px;
-      background: radial-gradient(circle, rgba(127, 179, 255, 0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255, 45, 155, 0.13) 0%, transparent 70%);
       bottom: 10%;
       right: 6%;
       animation: orbFloat2 11s ease-in-out infinite;
@@ -255,7 +252,7 @@
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1.1;
-      background: linear-gradient(140deg, #ffffff 20%, rgba(160, 205, 255, 0.95) 60%, rgba(79, 142, 255, 0.85) 100%);
+      background: linear-gradient(140deg, #ffffff 20%, rgba(255, 180, 220, 0.95) 60%, rgba(255, 45, 155, 0.9) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -272,7 +269,7 @@
       position: absolute;
       left: 0;
       top: 0;
-      background: linear-gradient(140deg, #ffffff 20%, rgba(160, 205, 255, 0.95) 60%, rgba(79, 142, 255, 0.85) 100%);
+      background: linear-gradient(140deg, #ffffff 20%, rgba(255, 180, 220, 0.95) 60%, rgba(255, 45, 155, 0.9) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -284,7 +281,6 @@
 
     .hero-title:hover::after { opacity: 0.4; }
 
-    /* FIX 4: hero-desc now scales with viewport to match hero-title */
     .hero-desc {
       font-size: clamp(0.8rem, 2vw, 0.9rem);
       color: var(--fg2);
@@ -318,7 +314,7 @@
     }
 
     .stat-num {
-      background: linear-gradient(135deg, #fff 0%, var(--accent2) 100%);
+      background: linear-gradient(135deg, #fff 0%, #ff69c0 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -342,7 +338,6 @@
       animation: fadeUp 0.7s 0.8s forwards;
     }
 
-    /* FIX 2: btn-primary is now a filled accent button, btn-secondary is outlined */
     .btn-primary {
       display: inline-flex;
       align-items: center;
@@ -364,7 +359,7 @@
     .btn-primary:hover {
       background: var(--accent2);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(79, 142, 255, 0.35);
+      box-shadow: 0 8px 24px rgba(255, 34, 145, 0.35);
     }
 
     .btn-secondary {
@@ -398,9 +393,10 @@
 
     .games-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1rem;
-      max-width: 1080px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      justify-content: center;
+      gap: 1.5rem;
+      max-width: 760px;
       margin: 0 auto;
       padding: 2.5rem 2.5rem 4rem;
       opacity: 0;
@@ -421,10 +417,15 @@
     }
 
     .game-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      border-color: rgba(79, 142, 255, 0.3);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    transform: translateY(-6px);
+    border-color: rgba(255, 45, 155, 0.6);
+    box-shadow:
+        0 0 0 1px rgba(255, 45, 155, 0.3),
+        0 0 20px rgba(255, 45, 155, 0.4),
+        0 0 50px rgba(255, 45, 155, 0.15),
+        0 20px 50px rgba(0, 0, 0, 0.5);
     }
+
 
     .game-card img {
       width: 100%;
@@ -437,7 +438,7 @@
 
     .game-card:hover img {
       transform: scale(1.04);
-      filter: brightness(0.7) saturate(0.8);
+      filter: brightness(0.75) saturate(0.8);
     }
 
     .game-overlay {
@@ -503,23 +504,6 @@
       50%       { opacity: 0.4; }
     }
 
-    .game-play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      width: 48px;
-      height: 48px;
-      background: rgba(79, 142, 255, 0.85);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.2s, transform 0.2s;
-      backdrop-filter: blur(4px);
-    }
-
     .game-play-btn::after {
       content: '';
       border-left: 18px solid white;
@@ -535,10 +519,10 @@
 
     .communities-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, 200px);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       justify-content: center;
-      gap: 2.5rem 3rem;
-      max-width: 900px;
+      gap: 2rem;
+      max-width: 820px;
       margin: 0 auto;
       padding: 2.5rem 2.5rem 4rem;
       opacity: 0;
@@ -597,11 +581,6 @@
       gap: 0.3rem;
     }
 
-    .community-count::before {
-      content: '👤';
-      font-size: 0.65rem;
-    }
-
     .contact-list {
       max-width: 480px;
       margin: 0 auto;
@@ -639,10 +618,6 @@
       flex-shrink: 0;
     }
 
-    /*
-      Note: if your SVG icons use `stroke` instead of `fill` (e.g. Feather/Lucide),
-      change `fill` to `stroke` here and in the hover rule below.
-    */
     .contact-platform svg {
       width: 18px;
       height: 18px;
