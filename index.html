@@ -1,11 +1,138 @@
-<!doctype html><html lang="en" class="scroll-smooth"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Inlur — Roblox developer, systems engineer, and experience designer."><meta name="theme-color" content="#030304"><title>Inlur — Roblox Developer</title><script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={theme:{extend:{colors:{ink:'#030304',panel:'#09090b'},fontFamily:{sans:['Montserrat','Avenir Next','Arial','sans-serif']}}}}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>:root{color-scheme:dark}body{background:#030304}.noise{background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E")}.nav-backdrop{background:linear-gradient(90deg,rgba(0,0,0,.92),rgba(10,10,12,.7),rgba(0,0,0,.92)),radial-gradient(circle at 50% 0,rgba(255,255,255,.13),transparent 65%)}.hero-grid{background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,black,transparent 82%)}.card-border:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.035) 45%,rgba(255,255,255,.12));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}.game-card:hover .game-art{transform:scale(1.04);filter:saturate(1.08)}.game-card:hover .arrow{transform:translate(3px,-3px)}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}</style></head>
-<body class="overflow-x-hidden font-sans text-white antialiased selection:bg-white/25"><div class="pointer-events-none fixed inset-0 z-50 opacity-[.025] noise"></div><style>body{background:#030304 radial-gradient(circle at 50% 12%,rgba(255,255,255,.035),transparent 28%)}section{background-color:transparent!important}.border-y,.border-t,.border-b{border-top-width:0!important;border-bottom-width:0!important}.divide-x>:not([hidden])~:not([hidden]),.divide-y>:not([hidden])~:not([hidden]){border-width:0!important}header nav,.max-w-6xl{max-width:64rem!important}#home{min-height:62vh!important}#home h1{font-size:clamp(4.25rem,9vw,7.25rem)!important;line-height:.9!important;padding:.12em 0}section[id]{scroll-margin-top:3rem}#games,#groups>div,#contact>div{padding-top:5.5rem!important;padding-bottom:5.5rem!important}#games h2,#groups h2,#contact h2,.group-record h3{background:linear-gradient(to bottom,#fff,#a1a1aa);-webkit-background-clip:text;background-clip:text;color:transparent}.group-record{padding:2rem 1rem!important}.group-icon{height:3.5rem;width:3.5rem;flex:none;border-radius:1rem;object-fit:cover;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}</style>
-<header class="absolute inset-x-0 top-0 z-40"><nav class="mx-auto flex h-20 max-w-6xl items-center justify-between px-5" aria-label="Primary navigation"><a href="#home" class="flex items-center gap-2 text-lg font-extrabold tracking-[-.04em]"><span class="text-xl">ϟ</span>inlur</a><div class="flex items-center gap-4 text-[10px] font-semibold uppercase text-zinc-500 sm:gap-8 sm:text-xs"><a class="text-white" href="#home">Home</a><a class="transition hover:text-white" href="#games">Games</a><a class="transition hover:text-white" href="#groups">Groups</a><a class="transition hover:text-white" href="contact.html">Contact</a></div></nav></header>
-<main><section id="home" class="relative isolate flex min-h-[70vh] items-center overflow-hidden pt-20 text-center"><div class="absolute inset-0 hero-grid"></div><div class="absolute left-1/2 top-1/3 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[.035] blur-3xl"></div><div class="relative mx-auto w-full max-w-5xl px-6 py-24"><h1 class="bg-gradient-to-b from-white via-zinc-200 to-zinc-600 bg-clip-text text-[clamp(5.5rem,15vw,11rem)] font-extrabold leading-[.78] tracking-[-.09em] text-transparent">inlur</h1><p class="mx-auto mt-10 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">Roblox developer and scripter focused on scalable systems, satisfying gameplay, and interfaces that feel effortless.</p><div class="mt-8 flex flex-wrap justify-center gap-2"><span class="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-xs text-zinc-300">Luau</span><span class="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-xs text-zinc-300">System Architecture</span><span class="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-xs text-zinc-300">UI Design</span><span class="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-xs text-zinc-300">Live Ops</span></div></div></section>
-<section class="bg-[#050507]"><div class="mx-auto grid max-w-5xl grid-cols-1 gap-4 px-6 sm:grid-cols-3"><div class="py-10 text-center"><strong id="total-players" class="block text-4xl font-extrabold tracking-[-.04em]">—</strong><span class="mt-2 block text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Active players</span></div><div class="py-10 text-center"><strong id="total-visits" class="block text-4xl font-extrabold tracking-[-.04em]">—</strong><span class="mt-2 block text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Total visits</span></div><div class="py-10 text-center"><strong id="total-members" class="block text-4xl font-extrabold tracking-[-.04em]">—</strong><span class="mt-2 block text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Total members</span></div></div></section>
-<section id="games" class="mx-auto max-w-6xl px-6 py-28 text-center lg:py-36"><p class="mb-3 text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Portfolio</p><h2 class="text-4xl font-extrabold tracking-[-.05em] sm:text-6xl">Our games</h2><p class="mx-auto mt-5 max-w-xl text-sm text-zinc-500">Every experience I've helped build on Roblox, all in one place.</p><div class="my-10 flex justify-center gap-2" role="group" aria-label="Sort games"><button type="button" data-sort="playing" class="sort-button rounded-full bg-white px-5 py-2.5 text-xs font-bold text-black">Most players</button><button type="button" data-sort="visits" class="sort-button rounded-full border border-white/10 px-5 py-2.5 text-xs font-bold text-zinc-400 transition hover:text-white">Most visits</button></div><div id="games-container" class="grid auto-rows-[250px] gap-4 text-left md:grid-cols-2 lg:grid-cols-6" aria-live="polite" aria-busy="true"><div class="h-full animate-pulse rounded-3xl border border-white/[.07] bg-white/[.02] lg:col-span-4 lg:row-span-2"></div><div class="h-full animate-pulse rounded-3xl border border-white/[.07] bg-white/[.02] lg:col-span-2"></div><div class="h-full animate-pulse rounded-3xl border border-white/[.07] bg-white/[.02] lg:col-span-2"></div></div></section>
-<section id="groups" class="border-y border-white/[.08] bg-[#050506]"><div class="mx-auto max-w-5xl px-6 py-28 text-center lg:py-36"><p class="mb-3 text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Communities</p><h2 class="text-4xl font-extrabold tracking-[-.05em] sm:text-6xl">Our groups</h2><p class="mx-auto mt-5 max-w-xl text-sm text-zinc-500">The Roblox communities where our experiences live and grow.</p><div class="mt-16 grid grid-cols-3 divide-x divide-white/[.08] border-y border-white/[.08] py-8"><div><strong id="summary-games" class="text-2xl font-extrabold sm:text-3xl">3</strong><p class="mt-2 text-[10px] uppercase tracking-[.2em] text-zinc-600">Games</p></div><div><strong id="summary-visits" class="text-2xl font-extrabold sm:text-3xl">—</strong><p class="mt-2 text-[10px] uppercase tracking-[.2em] text-zinc-600">Visits</p></div><div><strong class="text-2xl font-extrabold sm:text-3xl">3</strong><p class="mt-2 text-[10px] uppercase tracking-[.2em] text-zinc-600">Groups</p></div></div><div id="groups-container" class="divide-y divide-white/[.08] text-left" aria-live="polite">
-<article data-group-id="1090676297" class="group-record py-12"><div class="flex flex-col items-center justify-between gap-7 text-center sm:flex-row sm:text-left"><div><p class="mb-3 text-[10px] font-semibold uppercase tracking-[.24em] text-zinc-600">Roblox group</p><h3 class="text-2xl font-extrabold tracking-[-.04em] sm:text-4xl">Aspirant Interactive</h3></div><a href="https://www.roblox.com/communities/1090676297/Aspirant-Interactive#!/about" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 px-5 py-3 text-xs font-bold transition hover:bg-white hover:text-black">View group ↗</a></div><div class="mt-9 grid grid-cols-2 divide-x divide-white/[.08] border-t border-white/[.06] pt-7 text-center sm:text-left"><div><strong class="group-games text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Games</p></div><div class="pl-6"><strong class="group-visits text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Total visits</p></div></div></article>
-<article data-group-id="1018786782" class="group-record py-12"><div class="flex flex-col items-center justify-between gap-7 text-center sm:flex-row sm:text-left"><div><p class="mb-3 text-[10px] font-semibold uppercase tracking-[.24em] text-zinc-600">Roblox group</p><h3 class="text-2xl font-extrabold tracking-[-.04em] sm:text-4xl">0 CCU Table Games</h3></div><a href="https://www.roblox.com/communities/1018786782/0-CCU-Table-Games#!/about" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 px-5 py-3 text-xs font-bold transition hover:bg-white hover:text-black">View group ↗</a></div><div class="mt-9 grid grid-cols-2 divide-x divide-white/[.08] border-t border-white/[.06] pt-7 text-center sm:text-left"><div><strong class="group-games text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Games</p></div><div class="pl-6"><strong class="group-visits text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Total visits</p></div></div></article>
-<article data-group-id="422808508" class="group-record py-12"><div class="flex flex-col items-center justify-between gap-7 text-center sm:flex-row sm:text-left"><div><p class="mb-3 text-[10px] font-semibold uppercase tracking-[.24em] text-zinc-600">Roblox group</p><h3 class="text-2xl font-extrabold tracking-[-.04em] sm:text-4xl">Skylur Studios</h3></div><a href="https://www.roblox.com/communities/422808508/Skylur-Studios#!/about" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 px-5 py-3 text-xs font-bold transition hover:bg-white hover:text-black">View group ↗</a></div><div class="mt-9 grid grid-cols-2 divide-x divide-white/[.08] border-t border-white/[.06] pt-7 text-center sm:text-left"><div><strong class="group-games text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Games</p></div><div class="pl-6"><strong class="group-visits text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Total visits</p></div></div></article></div></div></section>
-<section id="contact"><div class="mx-auto max-w-5xl px-6 text-center"><p class="mb-5 text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Start a conversation</p><h2 class="text-4xl font-extrabold leading-tight tracking-[-.05em] sm:text-6xl">Let's build something<br>worth playing.</h2><p class="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-zinc-500">Tell me about the experience, system, or interface you have in mind.</p><a href="contact.html" class="mt-8 inline-flex rounded-full bg-white px-7 py-3.5 text-xs font-bold text-black transition hover:bg-zinc-200">Get in contact ↗</a></div></section><section class="mx-auto max-w-5xl px-6 py-20"><p class="mb-7 text-[10px] font-semibold uppercase tracking-[.3em] text-zinc-500">Inlur in numbers</p><div class="grid gap-7 sm:grid-cols-3"><div><strong id="bottom-games" class="text-3xl font-extrabold">3</strong><p class="mt-2 text-xs text-zinc-600">Games published on Roblox</p></div><div><strong id="bottom-visits" class="text-3xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Total player visits</p></div><div><strong id="bottom-members" class="text-3xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Community members</p></div></div></section></main><footer><div class="mx-auto flex max-w-5xl flex-col justify-between gap-8 px-6 py-12 sm:flex-row"><div><a href="#home" class="text-lg font-extrabold">ϟ inlur</a><p class="mt-5 text-xs text-zinc-700">© <span id="year"></span> Inlur. All rights reserved.</p></div><nav class="flex flex-wrap gap-6 text-xs text-zinc-600" aria-label="Footer navigation"><a class="hover:text-white" href="#home">Home</a><a class="hover:text-white" href="#games">Games</a><a class="hover:text-white" href="#groups">Groups</a><a class="hover:text-white" href="contact.html">Contact</a><a class="hover:text-white" href="https://www.roblox.com/users/1028929837/profile" target="_blank" rel="noreferrer">Roblox</a></nav></div></footer><script src="script.js" defer></script></body></html>
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Inlur — Roblox developer, systems engineer, and experience designer.">
+<meta name="theme-color" content="#030304">
+<title>Inlur — Roblox Developer</title>
+<script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={theme:{extend:{colors:{ink:'#030304',panel:'#09090b'},fontFamily:{sans:['Montserrat','Avenir Next','Arial','sans-serif']}}}}</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>:root{color-scheme:dark}body{background:#030304}.noise{background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E")}.nav-backdrop{background:linear-gradient(90deg,rgba(0,0,0,.92),rgba(10,10,12,.7),rgba(0,0,0,.92)),radial-gradient(circle at 50% 0,rgba(255,255,255,.13),transparent 65%)}.hero-grid{background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,black,transparent 82%)}.card-border:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.035) 45%,rgba(255,255,255,.12));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}.game-card:hover .game-art{transform:scale(1.04);filter:saturate(1.08)}.game-card:hover .arrow{transform:translate(3px,-3px)}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}</style>
+</head>
+<body class="overflow-x-hidden font-sans text-white antialiased selection:bg-white/25">
+<div class="pointer-events-none fixed inset-0 z-50 opacity-[.025] noise"></div>
+<style>body{background:#030304 radial-gradient(circle at 50% 12%,rgba(255,255,255,.035),transparent 28%)}section{background-color:transparent!important}.border-y,.border-t,.border-b{border-top-width:0!important;border-bottom-width:0!important}.divide-x>:not([hidden])~:not([hidden]),.divide-y>:not([hidden])~:not([hidden]){border-width:0!important}header nav,.max-w-6xl{max-width:64rem!important}#home{min-height:62vh!important}#home h1{font-size:clamp(4.25rem,9vw,7.25rem)!important;line-height:.9!important;padding:.12em 0}section[id]{scroll-margin-top:3rem}#games,#groups>div,#contact>div{padding-top:5.5rem!important;padding-bottom:5.5rem!important}#games h2,#groups h2,#contact h2,.group-record h3{background:linear-gradient(to bottom,#fff,#a1a1aa);-webkit-background-clip:text;background-clip:text;color:transparent}.group-record{padding:2rem 1rem!important}.group-icon{height:3.5rem;width:3.5rem;flex:none;border-radius:1rem;object-fit:cover;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}</style>
+<header class="absolute inset-x-0 top-0 z-40"><nav class="mx-auto flex h-20 max-w-6xl items-center justify-between px-5" aria-label="Primary navigation"><a href="#home" class="flex items-center gap-2 text-lg font-extrabold tracking-[-.04em]"><span class="text-xl">ϟ</span>inlur</a><div class="flex items-center gap-4 text-[10px] font-semibold uppercase text-zinc-500 sm:gap-8 sm:text-xs">
+<a class="text-white" href="#home">Home</a><a class="transition hover:text-white" href="#games">Games</a><a class="transition hover:text-white" href="#groups">Groups</a><a class="transition hover:text-white" href="contact.html">Contact</a>
+</div></nav></header>
+<main><section id="home" class="relative isolate flex min-h-[70vh] items-center overflow-hidden pt-20 text-center"><div class="absolute inset-0 hero-grid"></div>
+<div class="absolute left-1/2 top-1/3 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[.035] blur-3xl"></div>
+<div class="relative mx-auto w-full max-w-5xl px-6 py-24">
+<h1 class="bg-gradient-to-b from-white via-zinc-200 to-zinc-600 bg-clip-text text-[clamp(5.5rem,15vw,11rem)] font-extrabold leading-[.78] tracking-[-.09em] text-transparent">inlur</h1>
+<p class="mx-auto mt-10 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">Roblox developer and scripter focused on scalable systems, satisfying gameplay, and interfaces that feel effortless.</p>
+<div class="mt-8 flex flex-wrap justify-center gap-2">
+<span class="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-xs text-zinc-300">Luau</span><span class="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-xs text-zinc-300">System Architecture</span><span class="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-xs text-zinc-300">UI Design</span><span class="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-xs text-zinc-300">Live Ops</span>
+</div>
+</div></section>
+<section class="bg-[#050507]"><div class="mx-auto grid max-w-5xl grid-cols-1 gap-4 px-6 sm:grid-cols-3">
+<div class="py-10 text-center">
+<strong id="total-players" class="block text-4xl font-extrabold tracking-[-.04em]">—</strong><span class="mt-2 block text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Active players</span>
+</div>
+<div class="py-10 text-center">
+<strong id="total-visits" class="block text-4xl font-extrabold tracking-[-.04em]">—</strong><span class="mt-2 block text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Total visits</span>
+</div>
+<div class="py-10 text-center">
+<strong id="total-members" class="block text-4xl font-extrabold tracking-[-.04em]">—</strong><span class="mt-2 block text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Total members</span>
+</div>
+</div></section>
+<section id="games" class="mx-auto max-w-6xl px-6 py-28 text-center lg:py-36"><p class="mb-3 text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Portfolio</p>
+<h2 class="text-4xl font-extrabold tracking-[-.05em] sm:text-6xl">Our games</h2>
+<p class="mx-auto mt-5 max-w-xl text-sm text-zinc-500">Every experience I've helped build on Roblox, all in one place.</p>
+<div class="my-10 flex justify-center gap-2" role="group" aria-label="Sort games">
+<button type="button" data-sort="playing" class="sort-button rounded-full bg-white px-5 py-2.5 text-xs font-bold text-black">Most players</button><button type="button" data-sort="visits" class="sort-button rounded-full border border-white/10 px-5 py-2.5 text-xs font-bold text-zinc-400 transition hover:text-white">Most visits</button>
+</div>
+<div id="games-container" class="grid auto-rows-[250px] gap-4 text-left md:grid-cols-2 lg:grid-cols-6" aria-live="polite" aria-busy="true">
+<div class="h-full animate-pulse rounded-3xl border border-white/[.07] bg-white/[.02] lg:col-span-4 lg:row-span-2"></div>
+<div class="h-full animate-pulse rounded-3xl border border-white/[.07] bg-white/[.02] lg:col-span-2"></div>
+<div class="h-full animate-pulse rounded-3xl border border-white/[.07] bg-white/[.02] lg:col-span-2"></div>
+</div></section>
+<section id="groups" class="border-y border-white/[.08] bg-[#050506]"><div class="mx-auto max-w-5xl px-6 py-28 text-center lg:py-36">
+<p class="mb-3 text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Communities</p>
+<h2 class="text-4xl font-extrabold tracking-[-.05em] sm:text-6xl">Our groups</h2>
+<p class="mx-auto mt-5 max-w-xl text-sm text-zinc-500">The Roblox communities where our experiences live and grow.</p>
+<div class="mt-16 grid grid-cols-3 divide-x divide-white/[.08] border-y border-white/[.08] py-8">
+<div>
+<strong id="summary-games" class="text-2xl font-extrabold sm:text-3xl">3</strong><p class="mt-2 text-[10px] uppercase tracking-[.2em] text-zinc-600">Games</p>
+</div>
+<div>
+<strong id="summary-visits" class="text-2xl font-extrabold sm:text-3xl">—</strong><p class="mt-2 text-[10px] uppercase tracking-[.2em] text-zinc-600">Visits</p>
+</div>
+<div>
+<strong class="text-2xl font-extrabold sm:text-3xl">3</strong><p class="mt-2 text-[10px] uppercase tracking-[.2em] text-zinc-600">Groups</p>
+</div>
+</div>
+<div id="groups-container" class="divide-y divide-white/[.08] text-left" aria-live="polite">
+<article data-group-id="1090676297" class="group-record py-12"><div class="flex flex-col items-center justify-between gap-7 text-center sm:flex-row sm:text-left">
+<div>
+<p class="mb-3 text-[10px] font-semibold uppercase tracking-[.24em] text-zinc-600">Roblox group</p>
+<h3 class="text-2xl font-extrabold tracking-[-.04em] sm:text-4xl">Aspirant Interactive</h3>
+</div>
+<a href="https://www.roblox.com/communities/1090676297/Aspirant-Interactive#!/about" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 px-5 py-3 text-xs font-bold transition hover:bg-white hover:text-black">View group ↗</a>
+</div>
+<div class="mt-9 grid grid-cols-2 divide-x divide-white/[.08] border-t border-white/[.06] pt-7 text-center sm:text-left">
+<div>
+<strong class="group-games text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Games</p>
+</div>
+<div class="pl-6">
+<strong class="group-visits text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Total visits</p>
+</div>
+</div></article>
+<article data-group-id="1018786782" class="group-record py-12"><div class="flex flex-col items-center justify-between gap-7 text-center sm:flex-row sm:text-left">
+<div>
+<p class="mb-3 text-[10px] font-semibold uppercase tracking-[.24em] text-zinc-600">Roblox group</p>
+<h3 class="text-2xl font-extrabold tracking-[-.04em] sm:text-4xl">0 CCU Table Games</h3>
+</div>
+<a href="https://www.roblox.com/communities/1018786782/0-CCU-Table-Games#!/about" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 px-5 py-3 text-xs font-bold transition hover:bg-white hover:text-black">View group ↗</a>
+</div>
+<div class="mt-9 grid grid-cols-2 divide-x divide-white/[.08] border-t border-white/[.06] pt-7 text-center sm:text-left">
+<div>
+<strong class="group-games text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Games</p>
+</div>
+<div class="pl-6">
+<strong class="group-visits text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Total visits</p>
+</div>
+</div></article>
+<article data-group-id="422808508" class="group-record py-12"><div class="flex flex-col items-center justify-between gap-7 text-center sm:flex-row sm:text-left">
+<div>
+<p class="mb-3 text-[10px] font-semibold uppercase tracking-[.24em] text-zinc-600">Roblox group</p>
+<h3 class="text-2xl font-extrabold tracking-[-.04em] sm:text-4xl">Skylur Studios</h3>
+</div>
+<a href="https://www.roblox.com/communities/422808508/Skylur-Studios#!/about" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 px-5 py-3 text-xs font-bold transition hover:bg-white hover:text-black">View group ↗</a>
+</div>
+<div class="mt-9 grid grid-cols-2 divide-x divide-white/[.08] border-t border-white/[.06] pt-7 text-center sm:text-left">
+<div>
+<strong class="group-games text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Games</p>
+</div>
+<div class="pl-6">
+<strong class="group-visits text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Total visits</p>
+</div>
+</div></article>
+</div>
+</div></section>
+<section id="contact"><div class="mx-auto max-w-5xl px-6 text-center">
+<p class="mb-5 text-[10px] font-semibold uppercase tracking-[.28em] text-zinc-500">Start a conversation</p>
+<h2 class="text-4xl font-extrabold leading-tight tracking-[-.05em] sm:text-6xl">Let's build something<br>worth playing.</h2>
+<p class="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-zinc-500">Tell me about the experience, system, or interface you have in mind.</p>
+<a href="contact.html" class="mt-8 inline-flex rounded-full bg-white px-7 py-3.5 text-xs font-bold text-black transition hover:bg-zinc-200">Get in contact ↗</a>
+</div></section><section class="mx-auto max-w-5xl px-6 py-20"><p class="mb-7 text-[10px] font-semibold uppercase tracking-[.3em] text-zinc-500">Inlur in numbers</p>
+<div class="grid gap-7 sm:grid-cols-3">
+<div>
+<strong id="bottom-games" class="text-3xl font-extrabold">3</strong><p class="mt-2 text-xs text-zinc-600">Games published on Roblox</p>
+</div>
+<div>
+<strong id="bottom-visits" class="text-3xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Total player visits</p>
+</div>
+<div>
+<strong id="bottom-members" class="text-3xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Community members</p>
+</div>
+</div></section></main><footer><div class="mx-auto flex max-w-5xl flex-col justify-between gap-8 px-6 py-12 sm:flex-row">
+<div>
+<a href="#home" class="text-lg font-extrabold">ϟ inlur</a><p class="mt-5 text-xs text-zinc-700">© <span id="year"></span> Inlur. All rights reserved.</p>
+</div>
+<nav class="flex flex-wrap gap-6 text-xs text-zinc-600" aria-label="Footer navigation"><a class="hover:text-white" href="#home">Home</a><a class="hover:text-white" href="#games">Games</a><a class="hover:text-white" href="#groups">Groups</a><a class="hover:text-white" href="contact.html">Contact</a><a class="hover:text-white" href="https://www.roblox.com/users/1028929837/profile" target="_blank" rel="noreferrer">Roblox</a></nav>
+</div></footer><script src="script.js" defer></script>
+</body>
+</html>
+

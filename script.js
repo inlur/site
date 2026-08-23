@@ -25,6 +25,48 @@ let latestStats = new Map();
 let latestImages = new Map();
 let activeSort = 'playing';
 
+async function loadPublishedStats() {
+  if (window.location.protocol === 'file:') return false;
+  try {
+    const snapshot = await fetchJSON('./stats.json');
+    if (!Array.isArray(snapshot.games) || !snapshot.games.length) return false;
+
+    resolvedGames = games.map(game => {
+      const saved = snapshot.games.find(item => String(item.placeId) === String(game.placeId));
+      return { ...game, universeId: saved?.universeId ? String(saved.universeId) : game.universeId };
+    });
+    latestStats = new Map(snapshot.games.filter(item => item.universeId).map(item => [String(item.universeId), item]));
+    latestImages = new Map(snapshot.games.filter(item => item.universeId && item.imageUrl).map(item => [String(item.universeId), item.imageUrl]));
+    renderGames(resolvedGames, latestStats, latestImages);
+
+    const memberTotal = (snapshot.groups || []).reduce((sum, group) => sum + (group.memberCount || 0), 0);
+    document.getElementById('total-members').textContent = `${compact.format(memberTotal)}+`;
+    document.getElementById('bottom-members').textContent = `${compact.format(memberTotal)}+`;
+
+    const groupIcons = new Map((snapshot.groups || []).filter(group => group.imageUrl).map(group => [String(group.id), group.imageUrl]));
+    document.querySelectorAll('.group-record').forEach(record => {
+      let icon = record.querySelector('.group-icon');
+      const imageUrl = groupIcons.get(record.dataset.groupId);
+      if (!icon && imageUrl) {
+        const heading = record.querySelector('h3');
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-center gap-4 sm:justify-start';
+        icon = document.createElement('img');
+        icon.className = 'group-icon';
+        icon.alt = `${heading.textContent} group icon`;
+        icon.loading = 'lazy';
+        heading.parentElement.insertBefore(row, heading);
+        row.append(icon, heading);
+      }
+      if (icon && imageUrl && icon.tagName === 'IMG') icon.src = imageUrl;
+    });
+    return true;
+  } catch (error) {
+    console.warn('Published stats snapshot unavailable:', error);
+    return false;
+  }
+}
+
 async function fetchJSON(url) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 8_000);
@@ -163,22 +205,31 @@ async function initialize() {
   renderGames(resolvedGames);
   document.getElementById('total-members').textContent = '0+';
   document.getElementById('bottom-members').textContent = '0+';
-  refreshGroupCounts();
-  refreshGroupIcons();
 
   try {
     if (window.location.protocol !== 'file:') {
       try { games = await fetchJSON('./games.json'); } catch { games = FALLBACK_GAMES; }
     }
-    resolvedGames = await resolveUniverseIds(games);
-    await refreshGameStats();
+    const hasPublishedStats = await loadPublishedStats();
+    if (!hasPublishedStats) {
+      resolvedGames = await resolveUniverseIds(games);
+      await refreshGameStats();
+      refreshGroupCounts();
+      refreshGroupIcons();
+    }
   } catch (error) {
     console.warn('Could not load live game data:', error);
     resolvedGames = games.length ? games : [];
     if (resolvedGames.length) renderGames(resolvedGames);
     else document.getElementById('games-container').innerHTML = '<p class="col-span-full rounded-3xl border border-white/10 p-8 text-zinc-400">Games are temporarily unavailable. Please check back shortly.</p>';
   }
-  setInterval(() => { refreshGameStats(); refreshGroupCounts(); }, REFRESH_INTERVAL);
+  setInterval(async () => {
+    const hasPublishedStats = await loadPublishedStats();
+    if (!hasPublishedStats) {
+      refreshGameStats();
+      refreshGroupCounts();
+    }
+  }, REFRESH_INTERVAL);
 }
 
 initialize();
