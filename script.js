@@ -42,9 +42,10 @@ async function loadPublishedStats() {
     const memberTotal = (snapshot.groups || []).reduce((sum, group) => sum + (group.memberCount || 0), 0);
     document.getElementById('total-members').textContent = `${compact.format(memberTotal)}+`;
     document.getElementById('bottom-members').textContent = `${compact.format(memberTotal)}+`;
+    document.getElementById('summary-members').textContent = `${compact.format(memberTotal)}+`;
 
     const groupMembers = new Map((snapshot.groups || []).map(group => [String(group.id), group.memberCount || 0]));
-    document.querySelectorAll('.group-record').forEach(record => {
+    document.querySelectorAll('.group-record').forEach((record, index) => {
       const metrics = record.querySelector('.group-games')?.closest('.grid');
       if (!metrics) return;
       metrics.classList.remove('grid-cols-2');
@@ -56,7 +57,8 @@ async function loadPublishedStats() {
         memberMetric.innerHTML = '<strong class="group-members text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Members</p>';
         metrics.appendChild(memberMetric);
       }
-      memberMetric.querySelector('.group-members').textContent = `${compact.format(groupMembers.get(record.dataset.groupId) || 0)}+`;
+      const memberCount = groupMembers.get(record.dataset.groupId) ?? snapshot.groups?.[index]?.memberCount ?? 0;
+      memberMetric.querySelector('.group-members').textContent = `${compact.format(memberCount)}+`;
     });
 
     const groupIcons = new Map((snapshot.groups || []).filter(group => group.imageUrl).map(group => [String(group.id), group.imageUrl]));
@@ -119,8 +121,8 @@ function cardTemplate(game, stats = {}, imageUrl = '') {
   const size = game === resolvedGames[0] ? 'md:col-span-2 lg:col-span-4 lg:row-span-2' : 'lg:col-span-2';
   return `<a class="game-card card-border group relative block overflow-hidden rounded-3xl bg-panel ${size} transition duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_-30px_rgba(255,255,255,.16)]" href="${escapeHTML(game.link)}" target="_blank" rel="noreferrer">
     <div class="absolute inset-0 overflow-hidden bg-zinc-900">${art}<div class="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-black/5"></div></div>
-    <div class="relative flex h-full flex-col justify-between p-5 sm:p-6"><div class="flex items-start justify-between gap-3"><span class="rounded-full border border-white/15 bg-black/55 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[.16em] backdrop-blur-md">Featured</span><span class="arrow rounded-full border border-white/15 bg-black/55 px-3 py-2 text-sm backdrop-blur-md transition duration-300 group-hover:text-white">↗</span></div>
-    <div><h3 class="text-xl font-semibold tracking-[-.03em] drop-shadow-md sm:text-2xl">${escapeHTML(game.title)}</h3><div class="mt-3 flex flex-wrap gap-4 text-xs text-zinc-300"><span><i class="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400"></i>${players} playing</span><span>◉ ${visits} visits</span></div></div></div>
+    <div class="relative flex h-full flex-col justify-between p-5 sm:p-6"><div class="flex justify-end"><span class="arrow rounded-full border border-white/15 bg-black/55 px-3 py-2 text-sm backdrop-blur-md transition duration-300 group-hover:text-white">↗</span></div>
+    <div><h3 class="text-xl font-semibold tracking-[-.03em] drop-shadow-md sm:text-2xl">${escapeHTML(game.title)}</h3><div class="mt-3 flex flex-wrap gap-4 text-xs text-zinc-300"><span><i class="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400"></i>${players} playing</span><span>${visits} visits</span></div></div></div>
   </a>`;
 }
 
