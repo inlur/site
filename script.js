@@ -1,4 +1,8 @@
 const REFRESH_INTERVAL = 60_000;
+
+if (window.location.protocol.startsWith('http') && window.location.pathname.endsWith('/index.html')) {
+  history.replaceState(null, '', `${window.location.pathname.slice(0, -10)}${window.location.hash}`);
+}
 const API = {
   universe: placeId => `https://apis.roproxy.com/universes/v1/places/${placeId}/universe`,
   placeDetails: ids => `https://games.roproxy.com/v1/games/multiget-place-details?placeIds=${ids.join(',')}`,
