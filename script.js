@@ -25,6 +25,19 @@ let latestStats = new Map();
 let latestImages = new Map();
 let activeSort = 'playing';
 
+function renderHeroMarquee(snapshotGames = []) {
+  const iconRow = document.getElementById('icon-marquee');
+  const thumbnailRow = document.getElementById('thumbnail-marquee');
+  if (!iconRow || !thumbnailRow) return;
+  const icons = snapshotGames.filter(game => game.imageUrl);
+  const thumbnails = snapshotGames.filter(game => game.thumbnailUrl || game.imageUrl);
+  if (!icons.length) return;
+  const repeatedIcons = [...icons, ...icons, ...icons, ...icons];
+  const repeatedThumbs = [...thumbnails, ...thumbnails, ...thumbnails, ...thumbnails];
+  iconRow.innerHTML = repeatedIcons.map(game => `<img class="marquee-icon" src="${escapeHTML(game.imageUrl)}" alt="">`).join('');
+  thumbnailRow.innerHTML = repeatedThumbs.map(game => `<img class="marquee-thumb" src="${escapeHTML(game.thumbnailUrl || game.imageUrl)}" alt="">`).join('');
+}
+
 async function loadPublishedStats() {
   if (window.location.protocol === 'file:') return false;
   try {
@@ -38,6 +51,7 @@ async function loadPublishedStats() {
     latestStats = new Map(snapshot.games.filter(item => item.universeId).map(item => [String(item.universeId), item]));
     latestImages = new Map(snapshot.games.filter(item => item.universeId && item.imageUrl).map(item => [String(item.universeId), item.imageUrl]));
     renderGames(resolvedGames, latestStats, latestImages);
+    renderHeroMarquee(snapshot.games);
 
     const memberTotal = (snapshot.groups || []).reduce((sum, group) => sum + (group.memberCount || 0), 0);
     document.getElementById('total-members').textContent = `${compact.format(memberTotal)}+`;
@@ -131,7 +145,12 @@ function updatePortfolioStats(statsById = latestStats) {
     const visits = groupGames.reduce((sum, game) => sum + (statsById.get(game.universeId)?.visits || 0), 0);
     record.querySelector('.group-games').textContent = groupGames.length;
     record.querySelector('.group-visits').textContent = `${compact.format(visits)}+`;
+    record.dataset.visits = visits;
   });
+  const groupContainer = document.getElementById('groups-container');
+  [...groupContainer.querySelectorAll('.group-record')]
+    .sort((a, b) => Number(b.dataset.visits || 0) - Number(a.dataset.visits || 0))
+    .forEach(record => groupContainer.appendChild(record));
 }
 
 async function refreshGameStats() {
