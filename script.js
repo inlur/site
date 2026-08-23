@@ -57,6 +57,22 @@ async function loadPublishedStats() {
     document.getElementById('total-members').textContent = `${compact.format(memberTotal)}+`;
     document.getElementById('bottom-members').textContent = `${compact.format(memberTotal)}+`;
 
+    const groupMembers = new Map((snapshot.groups || []).map(group => [String(group.id), group.memberCount || 0]));
+    document.querySelectorAll('.group-record').forEach(record => {
+      const metrics = record.querySelector('.group-games')?.closest('.grid');
+      if (!metrics) return;
+      metrics.classList.remove('grid-cols-2');
+      metrics.classList.add('grid-cols-3');
+      let memberMetric = metrics.querySelector('.group-member-metric');
+      if (!memberMetric) {
+        memberMetric = document.createElement('div');
+        memberMetric.className = 'group-member-metric pl-6';
+        memberMetric.innerHTML = '<strong class="group-members text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Members</p>';
+        metrics.appendChild(memberMetric);
+      }
+      memberMetric.querySelector('.group-members').textContent = `${compact.format(groupMembers.get(record.dataset.groupId) || 0)}+`;
+    });
+
     const groupIcons = new Map((snapshot.groups || []).filter(group => group.imageUrl).map(group => [String(group.id), group.imageUrl]));
     document.querySelectorAll('.group-record').forEach(record => {
       let icon = record.querySelector('.group-icon');
