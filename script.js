@@ -16,7 +16,8 @@ const API = {
 const FALLBACK_GAMES = [
   { placeId:'140644961354094', universeId:null, title:'Pillow Battles', link:'https://www.roblox.com/games/140644961354094/Pillow-Battles', accent:'white', groupId:'1090676297' },
   { placeId:'86670564972916', universeId:null, title:'Guess My Cup', link:'https://www.roblox.com/games/86670564972916/Guess-My-Cup', accent:'white', groupId:'1018786782' },
-  { placeId:'108810211502353', universeId:null, title:'Wall Hop Royale', link:'https://www.roblox.com/games/108810211502353/Wall-Hop-Royale', accent:'white', groupId:'422808508' }
+  { placeId:'108810211502353', universeId:null, title:'Wall Hop Royale', link:'https://www.roblox.com/games/108810211502353/Wall-Hop-Royale', accent:'white', groupId:'422808508' },
+  { placeId:'124278191684019', universeId:null, title:'Find The 0.1% Needle!', link:'https://www.roblox.com/games/124278191684019/Find-The-0-1-Needle', accent:'white', groupId:'158767345' }
 ];
 
 const compact = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 });
