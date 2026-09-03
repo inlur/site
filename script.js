@@ -30,6 +30,22 @@ let latestStats = new Map();
 let latestImages = new Map();
 let activeSort = 'playing';
 
+function ensureGroupRecords(groupData = []) {
+  const container = document.getElementById('groups-container');
+  if (!container) return;
+  const details = new Map(groupData.map(group => [String(group.id), group]));
+  const groupIds = [...new Set(games.map(game => String(game.groupId || '')).filter(Boolean))];
+
+  groupIds.forEach(groupId => {
+    if (container.querySelector(`[data-group-id="${groupId}"]`)) return;
+    const group = details.get(groupId) || {};
+    const name = group.name || `Roblox Group ${groupId}`;
+    container.insertAdjacentHTML('beforeend', `<article data-group-id="${escapeHTML(groupId)}" class="group-record py-12"><div class="flex flex-col items-center justify-between gap-7 text-center sm:flex-row sm:text-left"><div><h3 class="text-2xl font-extrabold tracking-[-.04em] sm:text-4xl">${escapeHTML(name)}</h3></div><a href="https://www.roblox.com/communities/${escapeHTML(groupId)}" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 px-5 py-3 text-xs font-bold transition hover:bg-white hover:text-black">View group ↗</a></div><div class="mt-6 grid grid-cols-3 gap-4 pt-5 text-center sm:text-left"><div><strong class="group-games text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Games</p></div><div class="pl-6"><strong class="group-visits text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Total visits</p></div><div class="group-member-metric pl-3"><strong class="group-members text-2xl font-extrabold">—</strong><p class="mt-2 text-xs text-zinc-600">Members</p></div></div></article>`);
+  });
+  const summary = document.getElementById('summary-groups');
+  if (summary) summary.textContent = groupIds.length;
+}
+
 async function loadPublishedStats() {
   if (window.location.protocol === 'file:') return false;
   try {
@@ -41,7 +57,8 @@ async function loadPublishedStats() {
       return { ...game, universeId: saved?.universeId ? String(saved.universeId) : game.universeId };
     });
     latestStats = new Map(snapshot.games.filter(item => item.universeId).map(item => [String(item.universeId), item]));
-    latestImages = new Map(snapshot.games.filter(item => item.universeId && item.imageUrl).map(item => [String(item.universeId), item.imageUrl]));
+    latestImages = new Map(snapshot.games.filter(item => item.universeId && (item.thumbnailUrl || item.imageUrl)).map(item => [String(item.universeId), item.thumbnailUrl || item.imageUrl]));
+    ensureGroupRecords(snapshot.groups || []);
     renderGames(resolvedGames, latestStats, latestImages);
 
     const memberTotal = (snapshot.groups || []).reduce((sum, group) => sum + (group.memberCount || 0), 0);
@@ -123,7 +140,9 @@ function cardTemplate(game, stats = {}, imageUrl = '') {
     ? `<img class="game-art h-full w-full object-cover transition duration-700 ease-out" src="${escapeHTML(imageUrl)}" alt="${escapeHTML(game.title)} Roblox game icon" loading="lazy">`
     : `<div class="game-art h-full w-full bg-gradient-to-br ${palette} transition duration-700"><div class="grid h-full place-items-center text-7xl font-semibold text-white/10">${escapeHTML(game.title.charAt(0))}</div></div>`;
 
-  const size = game === resolvedGames[0] ? 'md:col-span-2 lg:col-span-4 lg:row-span-2' : 'lg:col-span-2';
+  const size = resolvedGames.length === 3
+    ? (game === resolvedGames[0] ? 'md:col-span-2 lg:col-span-4 lg:row-span-2' : 'lg:col-span-2')
+    : 'lg:col-span-3';
   return `<a class="game-card card-border group relative block overflow-hidden rounded-3xl bg-panel ${size} transition duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_-30px_rgba(255,255,255,.16)]" href="${escapeHTML(game.link)}" target="_blank" rel="noreferrer">
     <div class="absolute inset-0 overflow-hidden bg-zinc-900">${art}<div class="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-black/5"></div></div>
     <div class="relative flex h-full flex-col justify-between p-5 sm:p-6"><div class="flex justify-end"><span class="arrow rounded-full border border-white/15 bg-black/55 px-3 py-2 text-sm backdrop-blur-md transition duration-300 group-hover:text-white">↗</span></div>
@@ -182,6 +201,14 @@ async function refreshGameStats() {
 async function refreshGroupCounts() {
   const cards = [...document.querySelectorAll('[data-group-id]')];
   const results = await Promise.allSettled(cards.map(card => fetchJSON(API.group(card.dataset.groupId))));
+  results.forEach((result, index) => {
+    if (result.status !== 'fulfilled') return;
+    const card = cards[index];
+    const heading = card.querySelector('h3');
+    const members = card.querySelector('.group-members');
+    if (heading && result.value.name) heading.textContent = result.value.name;
+    if (members) members.textContent = `${compact.format(result.value.memberCount || 0)}+`;
+  });
   const total = results.reduce((sum, result) => sum + (result.status === 'fulfilled' ? result.value.memberCount || 0 : 0), 0);
   document.getElementById('total-members').textContent = total ? `${compact.format(total)}+` : '—';
   document.getElementById('bottom-members').textContent = total ? `${compact.format(total)}+` : '—';
@@ -238,6 +265,7 @@ async function initialize() {
     if (window.location.protocol !== 'file:') {
       try { games = await fetchJSON('./games.json'); } catch { games = FALLBACK_GAMES; }
     }
+    ensureGroupRecords();
     const hasPublishedStats = await loadPublishedStats();
     if (!hasPublishedStats) {
       resolvedGames = await resolveUniverseIds(games);
