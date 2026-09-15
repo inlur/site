@@ -242,7 +242,7 @@ async function initialize() {
   const discordButton = document.getElementById('discord-copy');
   if (discordButton) {
     discordButton.addEventListener('click', async event => {
-      try { await navigator.clipboard.writeText('@inlurs'); event.currentTarget.textContent = 'Copied @inlurs ✓'; }
+      try { await navigator.clipboard.writeText('@inlurs'); event.currentTarget.textContent = 'Copied @inlurs'; }
       catch { event.currentTarget.textContent = 'Discord · @inlurs'; }
       setTimeout(() => { event.currentTarget.textContent = 'Discord · @inlurs'; }, 1800);
     });
@@ -254,7 +254,6 @@ async function initialize() {
     renderGames(resolvedGames, latestStats, latestImages);
   }));
 
-  // Render useful content immediately. Live APIs enhance it afterwards.
   games = FALLBACK_GAMES;
   resolvedGames = FALLBACK_GAMES;
   renderGames(resolvedGames);
